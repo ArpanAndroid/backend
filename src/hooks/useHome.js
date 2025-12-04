@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import { fetchContent } from '../services/api';
 
-export const useContent = () => {
+/**
+ * Controller for the Home Page
+ * Handles data fetching and state management.
+ */
+export const useHome = () => {
     const [content, setContent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
