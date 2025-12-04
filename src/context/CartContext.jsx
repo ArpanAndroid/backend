@@ -58,7 +58,7 @@ export const CartProvider = ({ children }) => {
 
     const getCartTotal = () => {
         return cartItems.reduce((total, item) => {
-            const price = parseInt(item.price.replace('₹', ''));
+            const price = parseFloat(item.price.replace(/[^0-9.]/g, ''));
             return total + (price * item.quantity);
         }, 0);
     };

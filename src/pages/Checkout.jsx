@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
+import { register, createOrder } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import './Checkout.css';
 
@@ -10,42 +11,62 @@ const Checkout = () => {
         name: '',
         email: '',
         phone: '',
-        address: ''
+        password: '',
+        address: '',
+        city: '',
+        postalCode: '',
+        country: 'India'
     });
-    const [showOTP, setShowOTP] = useState(false);
-    const [otp, setOtp] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSendOTP = (e) => {
+    const handlePlaceOrder = async (e) => {
         e.preventDefault();
-        if (formData.phone.length === 10) {
-            setShowOTP(true);
-            // Demo: Auto-fill OTP after 2 seconds
-            setTimeout(() => {
-                setOtp('123456');
-            }, 2000);
-        } else {
-            alert('Please enter a valid 10-digit mobile number');
-        }
-    };
+        setLoading(true);
 
-    const handlePlaceOrder = () => {
-        if (otp === '123456') {
+        try {
+            // 1. Register User
+            const userResponse = await register({
+                name: formData.name,
+                email: formData.email,
+                password: formData.password,
+                phone: formData.phone
+            });
+
+            const token = userResponse.token;
+
+            // 2. Create Order
+            const orderItems = cartItems.map(item => ({
+                product: item.id, // Ensure product has ID
+                quantity: item.quantity,
+                price: parseFloat(item.price.replace('₹', ''))
+            }));
+
             const orderData = {
-                ...formData,
-                items: cartItems,
-                total: getCartTotal(),
-                orderId: 'ORD' + Date.now(),
-                date: new Date().toLocaleDateString()
+                orderItems,
+                shippingAddress: {
+                    address: formData.address,
+                    city: formData.city,
+                    postalCode: formData.postalCode,
+                    country: formData.country
+                },
+                paymentMethod: 'COD',
+                totalPrice: getCartTotal()
             };
-            localStorage.setItem('lastOrder', JSON.stringify(orderData));
+
+            await createOrder(orderData, token);
+
+            // Success
             clearCart();
             navigate('/order-success');
-        } else {
-            alert('Invalid OTP. Please enter 123456');
+        } catch (error) {
+            alert(error.message);
+            // If user exists, maybe try login? (For now just alert)
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -67,7 +88,7 @@ const Checkout = () => {
                 <div className="checkout-content">
                     <div className="checkout-form">
                         <h2>Customer Information</h2>
-                        <form onSubmit={handleSendOTP}>
+                        <form onSubmit={handlePlaceOrder}>
                             <div className="form-group">
                                 <label>Full Name *</label>
                                 <input
@@ -89,6 +110,17 @@ const Checkout = () => {
                                 />
                             </div>
                             <div className="form-group">
+                                <label>Password *</label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    required
+                                    minLength="6"
+                                />
+                            </div>
+                            <div className="form-group">
                                 <label>Mobile Number *</label>
                                 <input
                                     type="tel"
@@ -100,42 +132,42 @@ const Checkout = () => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Delivery Address *</label>
+                                <label>Address *</label>
                                 <textarea
                                     name="address"
                                     value={formData.address}
                                     onChange={handleChange}
-                                    rows="3"
+                                    rows="2"
                                     required
                                 />
                             </div>
-                            {!showOTP && (
-                                <button type="submit" className="btn-send-otp">
-                                    Send OTP
-                                </button>
-                            )}
-                        </form>
-
-                        {showOTP && (
-                            <div className="otp-section">
-                                <h3>Mobile Verification</h3>
-                                <p>OTP sent to {formData.phone}</p>
-                                <p className="demo-note">(Demo: OTP is 123456)</p>
+                            <div className="form-row">
                                 <div className="form-group">
-                                    <label>Enter OTP</label>
+                                    <label>City *</label>
                                     <input
                                         type="text"
-                                        value={otp}
-                                        onChange={(e) => setOtp(e.target.value)}
-                                        maxLength="6"
-                                        placeholder="Enter 6-digit OTP"
+                                        name="city"
+                                        value={formData.city}
+                                        onChange={handleChange}
+                                        required
                                     />
                                 </div>
-                                <button onClick={handlePlaceOrder} className="btn-place-order">
-                                    Place Order
-                                </button>
+                                <div className="form-group">
+                                    <label>Postal Code *</label>
+                                    <input
+                                        type="text"
+                                        name="postalCode"
+                                        value={formData.postalCode}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
                             </div>
-                        )}
+
+                            <button type="submit" className="btn-place-order" disabled={loading}>
+                                {loading ? 'Processing...' : 'Place Order'}
+                            </button>
+                        </form>
                     </div>
 
                     <div className="order-summary">
