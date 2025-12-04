@@ -1,0 +1,152 @@
+.order-success-page {
+    min-height: 100vh;
+    padding: 100px 20px 40px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.success-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    margin: 0 auto 20px;
+}
+
+.success-container h1 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.success-message {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.order-details,
+.order-items,
+.delivery-info {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.order-details h2,
+.order-items h2 {
+    color: var(--color-primary);
+    margin-bottom: 15px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.order-id {
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.order-item {
+    display: flex;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.item-info h3 {
+    color: var(--color-primary);
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.item-info p {
+    color: #666;
+    margin: 3px 0;
+}
+
+.item-price {
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.order-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.delivery-info h3 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.delivery-info p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.btn-continue {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.btn-continue:hover {
+    background: var(--color-secondary);
+}
+
+@media (max-width: 768px) {
+    .success-container {
+        padding: 20px;
+    }
+
+    .order-item {
+        flex-direction: column;
+    }
+}

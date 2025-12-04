@@ -1,0 +1,134 @@
+.checkout-page {
+    min-height: 100vh;
+    padding: 100px 20px 40px;
+    background: #f5f7fa;
+}
+
+.checkout-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.checkout-container h1 {
+    color: var(--color-primary);
+    margin-bottom: 30px;
+}
+
+.checkout-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.checkout-form,
+.order-summary {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+}
+
+.checkout-form h2,
+.order-summary h2 {
+    color: var(--color-primary);
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.btn-send-otp,
+.btn-place-order {
+    width: 100%;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-send-otp:hover,
+.btn-place-order:hover {
+    background: var(--color-secondary);
+}
+
+.otp-section {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 2px solid #eee;
+}
+
+.otp-section h3 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.demo-note {
+    color: #ff6600;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+.summary-items {
+    margin-bottom: 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    padding-top: 15px;
+    border-top: 2px solid var(--color-primary);
+    margin-top: 10px;
+}
+
+.checkout-empty {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.checkout-empty h2 {
+    color: var(--color-primary);
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .checkout-content {
+        grid-template-columns: 1fr;
+    }
+}

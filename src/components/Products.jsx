@@ -1,7 +1,15 @@
 import React from 'react';
+import { useCart } from '../context/CartContext';
 import './Products.css';
 
 const ProductCard = ({ product }) => {
+    const { addToCart } = useCart();
+
+    const handleAddToCart = () => {
+        addToCart(product);
+        alert(`${product.name} added to cart!`);
+    };
+
     return (
         <div className="product-card">
             <div className="product-image">
@@ -13,7 +21,7 @@ const ProductCard = ({ product }) => {
                 <p className="product-description">{product.description}</p>
                 <div className="product-footer">
                     <span className="product-price">{product.price}</span>
-                    <button className="product-btn">Add to Cart</button>
+                    <button className="product-btn" onClick={handleAddToCart}>Add to Cart</button>
                 </div>
             </div>
         </div>
